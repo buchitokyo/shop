@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('product_id')->comment('商品ID');
             $table->string('name')->comment('商品名');
             $table->string('amount')->comment('価格');
             $table->text('sizes')->comment('有効なサイズ'); // JSON

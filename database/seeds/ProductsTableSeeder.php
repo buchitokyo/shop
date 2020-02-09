@@ -14,6 +14,7 @@ class ProductsTableSeeder extends Seeder
     {
         for ($i = 1; $i <= 30; $i ++) {
             $product = new Product();
+            $product->product_id = 'product_No.'.mt_rand(1, 5);
             $product->name = $i .'番目の商品名';
             // ランダム
             $array = [500, 1000, 1500];

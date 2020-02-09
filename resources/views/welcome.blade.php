@@ -78,6 +78,15 @@
                     @endauth
                 </div>
             @endif
+            <!-- <div id="app">
+                <v-app id="inspire">
+                    <v-content>
+                        <v-container fluid>
+                            <v-btn color='primary'>Button</v-btn>
+                        </v-container>
+                    </v-content>
+                </v-app>
+            </div> -->
 
             <div class="content">
                 <div class="title m-b-md">
@@ -97,4 +106,5 @@
             </div>
         </div>
     </body>
+    <script src=”{{ asset('js/app.js') }}” defer></script>
 </html>
