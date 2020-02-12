@@ -41,7 +41,7 @@ Vue.use(Vuetify, {
     }
 });
 
-// const app = new Vue({
-//     el: '#app',
-//     vuetify: new Vuetify()
-// });
+const app = new Vue({
+    el: '#app',
+    vuetify: new Vuetify()
+});
