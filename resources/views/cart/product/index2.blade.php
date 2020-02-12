@@ -75,9 +75,9 @@
         data: () => ({
             products: [], // 配列
             cartItems: {},
-            // オブジェクト
-            // value: ['S', 'M', 'L']
-            selected: []
+             // オブジェクト
+             // value: ['S', 'M', 'L']
+             selected: []
         }),
         props: {
             value: String
@@ -99,16 +99,20 @@
         mounted: function() {
             this.getProducts();
         },
-        // computed: {
-        //     sizeOptions() {
-        //         console.log(this.products[0].sizes);
-        //         // return this.products[0].sizes;
-        //         this.products.map(size => console.log((
-        //             // value = {label:size.id, value: size.sizes}
-        //             value = size.sizes
-        //         )))
-        //     }
-        // }
+        computed: {
+            sizeOptions() {
+                console.log(this.products[0].sizes);
+                // return this.products[0].sizes;
+                this.products.map(size => console.log((
+                    // value = {label:size.id, value: size.sizes}
+                    this.value = size.sizes
+            )))
+                // this.products[0].sizes.map(function (value) {
+                //     console.log(value);
+                //     return this.value = value;
+                // })
+            }
+        }
     });
 
 </script>
