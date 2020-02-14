@@ -19,10 +19,16 @@
                                 key, indexでも表示できる
                                 <option v-for="size in product.sizes" :value="size" v-text="size"></option>
                             </select> -->
+                            <!-- <v-flex v-for="size in product.sizes" :key="size">
+                            <v-select
+                                :items="product.sizes"
+                                :item-value="size"
+                                solo
+                            ></v-select> -->
                             <v-select
                                 solo
                                 dense
-                                :items="value"
+                                :items="size"
                                 :options="sizeOptions"
                             >
                             </v-select>
@@ -75,12 +81,12 @@
         data: () => ({
             products: [], // 配列
             cartItems: {},
-             // オブジェクト
-             // value: ['S', 'M', 'L']
-             selected: []
+            // オブジェクト
+            // value: ['S', 'M', 'L']
+            selected: [],
         }),
         props: {
-            value: String
+            size: []
         },
         methods: {
                 getProducts: function() {
@@ -101,16 +107,12 @@
         },
         computed: {
             sizeOptions() {
-                console.log(this.products[0].sizes);
+                // console.log(this.products[0].sizes);
                 // return this.products[0].sizes;
-                this.products.map(size => console.log((
+                this.products.map(product => console.log((
                     // value = {label:size.id, value: size.sizes}
-                    this.value = size.sizes
-            )))
-                // this.products[0].sizes.map(function (value) {
-                //     console.log(value);
-                //     return this.value = value;
-                // })
+                    this.size = product.sizes
+                )))
             }
         }
     });

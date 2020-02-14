@@ -15,29 +15,30 @@
                         <v-card-text>
                             <label>サイズ：</label>
                             <!-- refでvueから参照できる -->
-                            <!-- <select class="form-control" ref="size">
-                                key, indexでも表示できる
+                            <select ref="size" class="form-control" ref="size">
+                                <!-- key, indexでも表示できる -->
                                 <option v-for="size in product.sizes" :value="size" v-text="size"></option>
-                            </select> -->
-                            <v-select
+                            </select>
+                            <!-- <v-select
                                 solo
                                 dense
-                                :items="value"
+                                :items="size"
+                                :item-text="size"
                                 :options="sizeOptions"
+                                return-object
                             >
-                            </v-select>
-
+                            </v-select> -->
                         </v-card-text>
                         <v-card-text>
                             <!-- <label>個数：</label>
-                            <input type="number" class="form-control" min="0" value="0"> -->
+                            <input ref="qty" type="number" class="form-control" min="0" value="0"> -->
                             <label>数量：</label>
                             <v-text-field
-                                ref="size"
+                                ref="qty"
                                 type="number"
-                                min=0
-                                max=50
-                                value=0
+                                min="0"
+                                max="50"
+                                value="0"
                                 solo
                             />
                         </v-card-text style="text-align:right;">
@@ -74,38 +75,70 @@
         el: '#app',
         data: () => ({
             products: [], // 配列
-            cartItems: {},
-            // オブジェクト
-            // value: ['S', 'M', 'L']
-            selected: []
+            cartItems: {}, // オブジェクト
         }),
-        props: {
-            value: String
-        },
+        // props: {
+        //     size: []
+        // },
         methods: {
                 getProducts: function() {
                     var self = this;
                     axios.get('/ajax/products')
                         .then(function(response){
-                            self.products = response.data;
-                            // console.log(self.products);
-                        });
+                        self.products = response.data;
+                        // console.log(self.products);
+                    });
                 },
                 // sizeOptions: function() {
-                //     console.log(this.getProducts());
+                //     var self = this;
+                //     axios.get('/ajax/products')
+                //         .then(function(response){
+                //         self.products = response.data;
+                //         self.products.map(product => console.log((
+                //             // value = {label:size.id, value: size.sizes}
+                //             this.size = product.sizes
+                //         )))
+                //     });
                 // }
+                // productsの各index
+                addCart: function(index) {
+                    if(confirm('カートへ追加します。よろしいですか？')) {
+                        var self = this;
+                        // refでhtmlが参照できる。
+                        // size[index]で該当するhtmlを参照。
+                        // valueで該当するサイズ取得。
+                        // console.log(this.$refs.size[index]);
+                        var size = this.$refs.size[index].value;
+                        console.log(this.$refs.qty[index]);
+                        var quantity = this.$refs.qty[index].value;
+                        // console.log(this.products[index]);
+                        var product = this.products[index];
+
+                        var url = '/ajax/carts';
+                        var params = {
+                            size: size,
+                            quantity: quantity,
+                            productId: product.id
+                        };
+                        axios.post(url, params)
+                            .then(function(response) {
+                                self.cartItems = response.data;
+                                console.log(self.cartItems);
+                        });
+                    }
+                }
             },
         // #appへのマウントが実行された後に実行
         mounted: function() {
             this.getProducts();
+            // this.sizeOptions();
         },
         // computed: {
         //     sizeOptions() {
-        //         console.log(this.products[0].sizes);
-        //         // return this.products[0].sizes;
-        //         this.products.map(size => console.log((
+        //         // console.log(this.products[0].sizes);
+        //         this.products.map(product => console.log((
         //             // value = {label:size.id, value: size.sizes}
-        //             value = size.sizes
+        //             this.size = product.sizes
         //         )))
         //     }
         // }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -35,7 +36,31 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Log::info($product->amount);
+        // Modelオブジェクト where('product_id', $requset->product_id)->get();
+        // $product = \App\Model\Product::find($requset->productId);
+
+        $product = \App\Model\Product::find($request->productId);
+        Log::info($product->quantity);
+        exit;
+        \Cart::add(
+            $product->id,
+            $product->name,
+            $request->quantity,
+            $product->amount
+            // $request->qty,
+            // ['size' => $request->size]
+        );
+        // [
+        //     'id' => $book->id,
+        //     'name' => $book->title,
+        //     'qty' => '1',
+        //     'price' => $book->price,
+        //     'weight' => '1',
+        //     'options' => ['photo_path'=> $book->photo_path]
+        // ]
+        return \Cart::content();
     }
 
     /**

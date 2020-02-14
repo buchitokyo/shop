@@ -30,5 +30,5 @@ Route::get('/products', 'Cart\ProductController@index')->name('cart.product.inde
 Route::get('/carts', 'Cart\CartController@index')->name('cart.cart.index');
 Route::resource('ajax/products', 'Ajax\ProductController')
     ->only(['index']);
-Route::resource('ajax/carts', 'Ajax\CartControllerr')
+Route::resource('ajax/carts', 'Ajax\CartController')
     ->only(['index', 'store', 'destroy']);
