@@ -26,8 +26,8 @@ Route::get('/home', 'HomeController@index')->name('home');
     *    Ajaxでカートの中身を｛参照／追加／変更／削除｝するページ　Ajax\CartController
     **/
 
-Route::get('/products', 'Cart\ProductController@index')->name('cart.product.index');
-Route::get('/carts', 'Cart\CartController@index')->name('cart.cart.index');
+Route::get('/products', 'Cart\ProductController@index')->name('carts.product.index');
+Route::get('/carts', 'Cart\CartController@index')->name('carts.cart.index');
 Route::resource('ajax/products', 'Ajax\ProductController')
     ->only(['index']);
 Route::resource('ajax/carts', 'Ajax\CartController')

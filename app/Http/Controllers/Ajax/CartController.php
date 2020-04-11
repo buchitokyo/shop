@@ -15,7 +15,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        return [
+            'items' => \Cart::content(), // カートの中身
+            'subtotal' => \Cart::subtotal(), // 全体の小計
+            'tax' => \Cart::tax(), // 全体の税
+            'total' => \Cart::total() // 全合計
+        ];
     }
 
     /**
@@ -37,29 +42,27 @@ class CartController extends Controller
     public function store(Request $request)
     {
 
-        // Log::info($product->amount);
+        // Log::info($request->amount);
         // Modelオブジェクト where('product_id', $requset->product_id)->get();
-        // $product = \App\Model\Product::find($requset->productId);
-
         $product = \App\Model\Product::find($request->productId);
-        Log::info($product->quantity);
-        exit;
+
         \Cart::add(
-            $product->id,
-            $product->name,
-            $request->quantity,
-            $product->amount
-            // $request->qty,
-            // ['size' => $request->size]
+            [
+                'id' => $product->id,
+                'name' => $product->name,
+                'qty' => $request->qty,
+                'price' => $product->amount,
+                'weight' => '0',
+                'options' => ['size'=> $request->size]
+            ]
         );
-        // [
-        //     'id' => $book->id,
-        //     'name' => $book->title,
-        //     'qty' => '1',
-        //     'price' => $book->price,
-        //     'weight' => '1',
-        //     'options' => ['photo_path'=> $book->photo_path]
-        // ]
+
+        // $product->id,
+        // $product->name,
+        // $request->quantity,
+        // $product->amount,
+        // $request->qty,
+        // ['size' => $request->size]
         return \Cart::content();
     }
 
@@ -103,8 +106,8 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        return \Cart::remove($request->row_id);
     }
 }
