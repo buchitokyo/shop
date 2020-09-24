@@ -1,7 +1,7 @@
 <template>
     <v-container id="wrap_product">
         <v-row class="float-right">
-                <a href="/carts">カートの中身</a>： <span class="badge badge-pill badge-light" v-text="Object.keys(cartItems).length"></span> 個
+                <a v-bind:href="endpoint">カートの中身</a>： <span class="badge badge-pill badge-light" v-text="Object.keys(cartItems).length"></span> 個
         </v-row>
         aaaaaa
         <!-- Object.keys(cartItems).length ex)["apple","banana"]-->
@@ -17,7 +17,7 @@
                         <option v-for="size in product.sizes" :value="size" v-text="size"></option>
                     </select>
                 </v-card-text>
-                <v-card-text style="text-align:right;">
+                <v-card-text>
                     <label>個数：</label>
                     <input ref="qty" type="number" class="form-control" min="0" value="0">
                 </v-card-text>
@@ -44,6 +44,13 @@ export default {
         cartItems: {}, // オブジェクト
     }),
 
+    props: {
+        // shopcomponent側の値をpropしている
+        endpoint: {
+            type: String,
+        },
+    },
+
     methods: {
             getProducts: function() {
                 var self = this;
@@ -54,6 +61,9 @@ export default {
             },
             // productsの各index
             addCart: function(index) {
+                if(this.$refs.qty[index].value == 0) {
+                    return alert('0ではだめ')
+                }
                 if(confirm('カートへ追加します。よろしいですか？')) {
                     // refでhtmlが参照できる。
                     // size[index]で該当するhtmlを参照。

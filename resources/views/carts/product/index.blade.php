@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <shop-component></shop-component>
+    <shop-component
+        endpoint="{{ route('carts.cart.index') }}"
+        ></shop-component>
 @endsection
