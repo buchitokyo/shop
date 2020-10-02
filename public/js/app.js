@@ -2012,11 +2012,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    // cartcomponent側の値をpropしている
+    endpoint: {
+      type: String
+    },
+    csrf: {
+      type: String,
+      required: true
+    }
+  },
   data: function data() {
     return {
-      carts: {} // オブジェクト
-
+      carts: {}
     };
   },
   methods: {
@@ -2039,6 +2070,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/ajax/carts').then(function (response) {
         self.carts = response.data;
       });
+    },
+    stripe: function stripe() {
+      form.action = this.endpoint;
+      form.submit();
     }
   },
   mounted: function mounted() {
@@ -2057,6 +2092,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -38357,138 +38394,204 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-container",
-    { attrs: { id: "wrap_cart" } },
+    "v-app",
+    { attrs: { id: "inspire" } },
     [
-      _c("h1", [_vm._v("カートの中身")]),
-      _vm._v(" "),
-      _c("v-simple-table", {
-        attrs: { dense: "" },
-        scopedSlots: _vm._u([
-          {
-            key: "default",
-            fn: function() {
-              return [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", [_vm._v("商品")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("個数")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("価格")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("小計")]),
-                    _vm._v(" "),
-                    _c("th")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  [
-                    _vm._l(_vm.carts.items, function(cartItem, rowId) {
-                      return _c("tr", [
-                        _c("td", [
-                          _c("span", {
-                            domProps: { textContent: _vm._s(cartItem.name) }
-                          }),
-                          _vm._v(" （サイズ： "),
-                          _c("span", {
-                            domProps: {
-                              textContent: _vm._s(cartItem.options.size)
-                            }
-                          }),
-                          _vm._v("）\n                    ")
+      _c(
+        "v-container",
+        { attrs: { id: "wrap_cart" } },
+        [
+          _c(
+            "v-form",
+            { ref: "form", attrs: { id: "form", method: "post", action: "" } },
+            [
+              _c("h1", [_vm._v("カートの中身")]),
+              _vm._v(" "),
+              _c("v-simple-table", {
+                attrs: { dense: "" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function() {
+                      return [
+                        _c("thead", [
+                          _c("tr", [
+                            _c("th", [_vm._v("商品")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("個数")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("価格")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("小計")]),
+                            _vm._v(" "),
+                            _c("th")
+                          ])
                         ]),
                         _vm._v(" "),
-                        _c("td", {
-                          domProps: { textContent: _vm._s(cartItem.qty) }
-                        }),
-                        _vm._v(" "),
-                        _c("td", {
-                          domProps: { textContent: _vm._s(cartItem.price) }
-                        }),
-                        _vm._v(" "),
-                        _c("td", {
-                          domProps: { textContent: _vm._s(cartItem.subtotal) }
-                        }),
-                        _vm._v(" "),
                         _c(
-                          "td",
-                          { staticClass: "text-right" },
+                          "tbody",
                           [
-                            _c(
-                              "v-btn",
-                              {
-                                attrs: {
-                                  rounded: "",
-                                  color: "primary",
-                                  dark: ""
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeItem(rowId)
+                            _vm._l(_vm.carts.items, function(cartItem, rowId) {
+                              return _c("tr", [
+                                _c("td", [
+                                  _c("span", {
+                                    domProps: {
+                                      textContent: _vm._s(cartItem.name)
+                                    }
+                                  }),
+                                  _vm._v(" （サイズ： "),
+                                  _c("span", {
+                                    domProps: {
+                                      textContent: _vm._s(cartItem.options.size)
+                                    }
+                                  }),
+                                  _vm._v("）\n                        ")
+                                ]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(cartItem.qty)
                                   }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            削除\n                        "
+                                }),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(cartItem.price)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("td", {
+                                  domProps: {
+                                    textContent: _vm._s(cartItem.subtotal)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  { staticClass: "text-right" },
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          rounded: "",
+                                          color: "primary",
+                                          dark: ""
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.removeItem(rowId)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                削除\n                            "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
                                 )
-                              ]
+                              ])
+                            }),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _c("td", { attrs: { colspan: "3" } }),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("小計")]),
+                              _vm._v(" "),
+                              _c("th", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.carts.subtotal)
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _c("td", { attrs: { colspan: "3" } }),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("税")]),
+                              _vm._v(" "),
+                              _c("th", {
+                                domProps: { textContent: _vm._s(_vm.carts.tax) }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tr",
+                              [
+                                _c("td", { attrs: { colspan: "3" } }),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("合計")]),
+                                _vm._v(" "),
+                                _c("th", {
+                                  domProps: {
+                                    textContent: _vm._s(_vm.carts.total)
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("v-text-field", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: false,
+                                      expression: "false"
+                                    }
+                                  ],
+                                  attrs: { name: "total" },
+                                  model: {
+                                    value: _vm.carts.total,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.carts, "total", $$v)
+                                    },
+                                    expression: "carts.total"
+                                  }
+                                })
+                              ],
+                              1
                             )
                           ],
-                          1
+                          2
                         )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", { attrs: { colspan: "3" } }),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("小計")]),
-                      _vm._v(" "),
-                      _c("th", {
-                        domProps: { textContent: _vm._s(_vm.carts.subtotal) }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", { attrs: { colspan: "3" } }),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("税")]),
-                      _vm._v(" "),
-                      _c("th", {
-                        domProps: { textContent: _vm._s(_vm.carts.tax) }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", { attrs: { colspan: "3" } }),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("合計")]),
-                      _vm._v(" "),
-                      _c("th", {
-                        domProps: { textContent: _vm._s(_vm.carts.total) }
-                      })
-                    ])
-                  ],
-                  2
-                )
-              ]
-            },
-            proxy: true
-          }
-        ])
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "text-right" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "button" } },
-          [_vm._v("お会計へ")]
-        )
-      ])
+                      ]
+                    },
+                    proxy: true
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-right" },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "success", dark: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.stripe()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    お会計へ\n                ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -38516,85 +38619,100 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-container",
-    { attrs: { id: "wrap_product" } },
+    "v-app",
+    { attrs: { id: "inspire" } },
     [
-      _c("v-row", { staticClass: "float-right" }, [
-        _c("a", { attrs: { href: _vm.endpoint } }, [_vm._v("カートの中身")]),
-        _vm._v("： "),
-        _c("span", {
-          staticClass: "badge badge-pill badge-light",
-          domProps: { textContent: _vm._s(Object.keys(_vm.cartItems).length) }
-        }),
-        _vm._v(" 個\n    ")
-      ]),
-      _vm._v("\n    aaaaaa\n    "),
-      _vm._v(" "),
-      _c("h1", [_vm._v("商品一覧")]),
-      _vm._v(" "),
       _c(
-        "v-row",
-        _vm._l(_vm.products, function(product, index) {
-          return _c(
-            "v-card",
-            { key: index, staticClass: "col-sm-4" },
-            [
-              _c("v-card-title", {
-                domProps: { textContent: _vm._s(product.name) }
-              }),
-              _vm._v(" "),
-              _c("v-card-text", [
-                _c("label", [_vm._v("サイズ：")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  { ref: "size", refInFor: true, staticClass: "form-control" },
-                  _vm._l(product.sizes, function(size) {
-                    return _c("option", {
-                      domProps: { value: size, textContent: _vm._s(size) }
-                    })
-                  }),
-                  0
-                )
-              ]),
-              _vm._v(" "),
-              _c("v-card-text", [
-                _c("label", [_vm._v("個数：")]),
-                _vm._v(" "),
-                _c("input", {
-                  ref: "qty",
-                  refInFor: true,
-                  staticClass: "form-control",
-                  attrs: { type: "number", min: "0", value: "0" }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
+        "v-container",
+        { attrs: { id: "wrap_product" } },
+        [
+          _c("v-row", { staticClass: "float-right" }, [
+            _c("a", { attrs: { href: _vm.endpoint } }, [
+              _vm._v("カートの中身")
+            ]),
+            _vm._v("： "),
+            _c("span", {
+              staticClass: "badge badge-pill badge-light",
+              domProps: {
+                textContent: _vm._s(Object.keys(_vm.cartItems).length)
+              }
+            }),
+            _vm._v(" 個\n        ")
+          ]),
+          _vm._v("\n        aaaaaa\n        "),
+          _vm._v(" "),
+          _c("h1", [_vm._v("商品一覧")]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            _vm._l(_vm.products, function(product, index) {
+              return _c(
+                "v-card",
+                { key: index, staticClass: "col-sm-4" },
                 [
+                  _c("v-card-title", {
+                    domProps: { textContent: _vm._s(product.name) }
+                  }),
+                  _vm._v(" "),
+                  _c("v-card-text", [
+                    _c("label", [_vm._v("サイズ：")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        ref: "size",
+                        refInFor: true,
+                        staticClass: "form-control"
+                      },
+                      _vm._l(product.sizes, function(size) {
+                        return _c("option", {
+                          domProps: { value: size, textContent: _vm._s(size) }
+                        })
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-card-text", [
+                    _c("label", [_vm._v("個数：")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      ref: "qty",
+                      refInFor: true,
+                      staticClass: "form-control",
+                      attrs: { type: "number", min: "0", value: "0" }
+                    })
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      attrs: { rounded: "", color: "primary", dark: "" },
-                      on: {
-                        click: function($event) {
-                          return _vm.addCart(index)
-                        }
-                      }
-                    },
+                    "v-card-actions",
                     [
-                      _vm._v(
-                        "\n                    カートへ入れる\n                "
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { rounded: "", color: "primary", dark: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.addCart(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        カートへ入れる\n                    "
+                          )
+                        ]
                       )
-                    ]
+                    ],
+                    1
                   )
                 ],
                 1
               )
-            ],
+            }),
             1
           )
-        }),
+        ],
         1
       )
     ],

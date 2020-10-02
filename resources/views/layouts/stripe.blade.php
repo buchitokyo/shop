@@ -14,8 +14,9 @@
         <!-- Styles -->
         <!-- <link rel="stylesheet" href="css/app.css"> -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- <script src="https://js.stripe.com/v3/"></script> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             html, body {
                 background-color: #fff;
@@ -28,9 +29,10 @@
         </style>
     </head>
     <body>
-        <div id="app">
-            @yield('content')
-        </div>
-        <script src=" {{ mix('js/app.js') }} "></script>
+        @yield('content')
+        @yield('script')
+        <!-- @if(request()->path() === 'payment/form')
+            @include('parts.payment');
+        @endif -->
     </body>
 </html>
